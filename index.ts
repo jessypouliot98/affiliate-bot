@@ -1,8 +1,8 @@
-import { extractHtmlBlockFromWebsite } from "./src/services/extractHtmlBlockFromWebsite.ts";
+import { extractHtmlBlockFromWebsite } from "./src/functions/extractHtmlBlockFromWebsite.ts";
 import { browser } from "./src/browser/client.ts";
-import { extractKeywordsFromHtml } from "./src/services/extractKeywordsFromHtml.ts";
-import { extractAmazonSearchesFromKeywords } from "./src/services/extractAmazonSearchesFromKeywords.ts";
-import { extractAmazonSearchForSaleItems } from "./src/services/extractAmazonSearchForSaleItems.ts";
+import { extractKeywordsFromHtml } from "./src/functions/extractKeywordsFromHtml.ts";
+import { extractAmazonSearchesFromKeywords } from "./src/functions/extractAmazonSearchesFromKeywords.ts";
+import { extractAmazonSearchForSaleItems } from "./src/functions/extractAmazonSearchForSaleItems.ts";
 
 async function main() {
   const b = await browser;
