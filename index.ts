@@ -2,7 +2,7 @@ import { extractHtmlBlockFromWebsite } from "./src/functions/extractHtmlBlockFro
 import { browser } from "./src/browser/client.ts";
 import { extractKeywordsFromHtml } from "./src/functions/extractKeywordsFromHtml.ts";
 import { extractAmazonSearchesFromKeywords } from "./src/functions/extractAmazonSearchesFromKeywords.ts";
-import { extractAmazonSearchForSaleItems } from "./src/functions/extractAmazonSearchForSaleItems.ts";
+import { extractAmazonSearchForSaleItemLinks } from "./src/functions/extractAmazonSearchForSaleItemLinks.ts";
 
 async function main() {
   const b = await browser;
@@ -25,7 +25,7 @@ async function main() {
 
   for (const searchTerm of searchTerms) {
     if (searchTerm.trim() === "") continue;
-    await extractAmazonSearchForSaleItems(searchTerm, { page });
+    await extractAmazonSearchForSaleItemLinks(searchTerm, { page });
   }
 
   await page.close();

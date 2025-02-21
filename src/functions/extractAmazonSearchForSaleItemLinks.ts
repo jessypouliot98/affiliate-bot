@@ -6,7 +6,7 @@ export type Dependencies = {
   page: Page;
 }
 
-export async function extractAmazonSearchForSaleItems(searchTerm: string, { page }: Dependencies) {
+export async function extractAmazonSearchForSaleItemLinks(searchTerm: string, { page }: Dependencies): Promise<string[]> {
   const k = searchTerm.replace(/\s/g, "+");
   const url = `https://www.amazon.ca/s?k=${k}`;
   await pageGoto(page, url);
@@ -17,7 +17,21 @@ export async function extractAmazonSearchForSaleItems(searchTerm: string, { page
     path: path.join(process.cwd(), `.debug/amazon-search_${k}.jpeg`),
     fullPage: true,
     type: "jpeg",
-  })
+  });
+  const dealLocator = page.locator("[data-a-badge-type='deal']");
+  const dealTags = await dealLocator.all();
+
+  const productPaths = await Promise.all(
+    dealTags.map((dealTag) => {
+      return dealTag.evaluate((node) => {
+        return node.querySelector("[data-a-badge-type='deal']")?.closest("[data-component-id]")?.querySelector("a")?.getAttribute("href");
+      })
+    })
+  )
+
+  return productPaths
+    .filter((path) => path != undefined)
+    .map((path) => "https://amazon.ca" + path);
 }
 
 async function pageGoto(page: Page, url: string) {
